@@ -5,6 +5,7 @@ import SearchPanel from "../search-panel/search-panel";
 import TodoList from "../todo-list/todo-list";
 import ItemStatusFilter from "../item-status-filter/item-status-filter";
 import "./app.css";
+import ItemAddForm from "../item-add-form/item-add-form";
 export default class App extends Component {
   state = {
     todoData: [
@@ -23,6 +24,14 @@ export default class App extends Component {
       return { todoData: newArray };
     });
   };
+  addItem = text => {
+    console.log("Added", text);
+    /* this.setState(({ todoData }) => {
+      const newArr = todoData.push(text);
+      return { todoData: newArr };
+    });*/
+  };
+
   render() {
     return (
       <div className="todo-app">
@@ -32,6 +41,7 @@ export default class App extends Component {
           <ItemStatusFilter />
         </div>
         <TodoList todos={this.state.todoData} onDeleted={this.deletedItem} />
+        <ItemAddForm onItemAdded={this.addItem} />
       </div>
     );
   }
