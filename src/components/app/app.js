@@ -42,7 +42,7 @@ export default class App extends Component {
       return { todoData: newArr };
     });
   };
-
+  toggleProperty(arr, id, propName) {}
   onToggleImportant = id => {
     console.log("Toggle important", id);
   };
@@ -61,9 +61,12 @@ export default class App extends Component {
   };
 
   render() {
+    const doneCount = this.state.todoData.filter(el => el.done).length;
+    const todoCount = this.state.todoData.length - doneCount;
+
     return (
       <div className="todo-app">
-        <AppHeader />
+        <AppHeader toDo={todoCount} done={doneCount} />
         <div className="top-panel d-flex">
           <SearchPanel />
           <ItemStatusFilter />
