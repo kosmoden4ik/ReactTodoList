@@ -35,28 +35,34 @@ export default class App extends Component {
     });
   };
   addItem = text => {
-    const newItem = this.createTodoItem("new text");
+    const newItem = this.createTodoItem(text);
     //maxId++;
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem];
       return { todoData: newArr };
     });
   };
-  toggleProperty(arr, id, propName) {}
+  toggleProperty(arr, id, propName) {
+    this.setState(({ todoData }) => {
+      const idx = arr.findIndex(el => el.id == id);
+      const oldItem = arr[idx];
+      const newItem = { ...oldItem, [propName]: !oldItem[propName] };
+      const newArray = [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
+      return { todoData: newArray };
+    });
+  }
   onToggleImportant = id => {
-    console.log("Toggle important", id);
+    this.setState(({ todoData }) => {
+      return {
+        todoData: this.toggleProperty(todoData, id, "important")
+      };
+    });
   };
   onToggleDone = id => {
     this.setState(({ todoData }) => {
-      const idx = todoData.findIndex(el => el.id == id);
-      const oldItem = todoData[idx];
-      const newItem = { ...oldItem, done: !oldItem.done };
-      const newArray = [
-        ...todoData.slice(0, idx),
-        newItem,
-        ...todoData.slice(idx + 1)
-      ];
-      return { todoData: newArray };
+      return {
+        todoData: this.toggleProperty(todoData, id, "done")
+      };
     });
   };
 
